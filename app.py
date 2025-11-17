@@ -145,6 +145,10 @@ if st.button("▶️ 시뮬레이션 시작"):
     st.subheader("📡 전략 분기 경고")
     show_alerts()
 
+
+# 세션 상태 초기화
+if 'round_idx' not in st.session_state:
+    st.session_state.round_idx = 0
 # ==================== Game Loop ====================
 @dataclass
 class LogRow:
