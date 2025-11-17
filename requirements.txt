@@ -7,3 +7,4 @@ accelerate
 uv
 matplotlib
 scipy
+dataclass
