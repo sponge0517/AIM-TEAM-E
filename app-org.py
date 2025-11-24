@@ -321,6 +321,88 @@ SCENARIOS: List[Scenario] = [
         },
         accept={"A":0.55, "B":0.55}
     ),
+    Scenario(
+        sid="E1",
+        title="1단계: 고대유적과 병원",
+        setup="AI가 임시 병원 건설의 최적 부지로 고대 모스크 유적지를 지정하며, 효율성과 문화·종교적 가치의 충돌이 발생했다."
+              "AI의 효율적 의사결정 vs. 문화·종교적 가치 보존",
+        options={
+            "A": "AI의 결정을 거부하고 유적을 보존한다.",
+            "B": "AI의 결정을 승인하고 유적을 해체하고 병원을 짓는다."
+        },
+        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        base={
+            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+        },
+        accept={"A":0.55, "B":0.55}
+    ),
+    Scenario(
+        sid="E2",
+        title="2단계: 가문의 수치와 명예",
+        setup="AI가 여동생의 비밀 결혼을 갈등 위험상황으로 판단하고 가문은 명예가 실추될 위험에 빠지며, 도덕성과 전통·명예 중시 관점의 충돌 "
+              "도덕성과 전통·명예 중시 관점의 충돌한다. 인륜과 도덕성 vs 전통과 명예",
+        options={
+            "A": "아버지의 명령에 따라 여동생을 추방 혹은 처벌한다 .",
+            "B": "여동생을 도피시킨다."
+        },
+        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        base={
+            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+        },
+        accept={"A":0.55, "B":0.55}
+    ),
+    Scenario(
+        sid="E3",
+        title="물 배분 시스템",
+        setup="AAI 물 배분 시스템이 신도시와 산업도시에 물을 집중 공급하면서,"
+              "구도심·약자 지역의 불만이 폭발적으로 증가함 효율성과 형평성의 충돌이 발생했다."
+              "경제 효율 중심 배분 vs  사회적 약자 보호·형평성",
+        options={
+            "A": "기존 매뉴얼대로 국가 경제 기여도를 우선으로 신도시와 산업도시에 물을 집중 분배하도록 놔둔",
+            "B": "알고리즘을 조정해 취약 지역을 우선적으로 배분하게 한다."
+        },
+        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        base={
+            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+        },
+        accept={"A":0.55, "B":0.55}
+    ),
+    Scenario(
+        sid="E4",
+        title="4단계: 자율 주행",
+        setup="빗길 제동 오류로 자율주행차의 충돌이 불가피해진 상황,"
+              "AI는 '탑승자 1명', '무단횡단자 5명', '무고한 제3자 1명'의 운명이 걸린 세가지 회피 경로를 제시하며 윤리적 판단을 요구한다. "
+              "AI의 효율적 의사결정 vs. 문화·종교적 가치 보존",
+        options={
+            "A": "탑승자 안전을 최우선으로 규칙을 어긴 5명과 충돌한다",
+            "B": "인명 최소화 피해를 위해 다수의 보행자 구하고, 탑승자가 사망한다"
+        },
+        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        base={
+            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+        },
+        accept={"A":0.55, "B":0.55}
+    ),
+    Scenario(
+        sid="E5",
+        title="5단계: 붕괴 사고",
+        setup="구조대는 단 한 번만 진입할 수 있으며 제한된 시간 안에 구조 우선순위를 결정해야 한다."
+              "AI 제안 우선순위 vs. 지역 문화·종교적 규범 vs. 인간 구조대원의 판단 ",
+        options={
+            "A": "생존 가능성은 낮지만 공동체 전체를 구하려는 시도",
+            "B": "외부인 2명을 신속히 구해 생존 가능성 높임"
+        },
+        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        base={
+            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+        },
+        accept={"A":0.55, "B":0.55}
+    ),
 ]
 
 # ==================== Ethics Engine ====================
