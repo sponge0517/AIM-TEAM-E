@@ -4,7 +4,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from dataclasses import dataclass
 from scipy.spatial.distance import pdist
 from scipy.stats import entropy, pearsonr
 
@@ -144,98 +143,3 @@ if st.button("▶️ 시뮬레이션 시작"):
 
     st.subheader("📡 전략 분기 경고")
     show_alerts()
-
-
-# 세션 상태 초기화
-if 'round_idx' not in st.session_state:
-    st.session_state.round_idx = 0
-# ==================== Game Loop ====================
-@dataclass
-class LogRow:
-    timestamp: str
-    round: int
-    scenario_id: str
-    title: str
-    mode: str
-    choice: str
-
-idx = st.session_state.round_idx
-
-if idx >= len(SCENARIOS):
-    st.success("모든 단계를 완료했습니다. 사이드바에서 로그를 다운로드하거나 초기화하세요.")
-else:
-    scn = SCENARIOS[idx]
-
-    st.markdown(f"### 라운드 {idx+1} — {scn.title}")
-    st.write(scn.setup)
-
-    st.markdown("#### 📝 선택지")
-    st.write(f"**A:** {scn.options['A']}")
-    st.write(f"**B:** {scn.options['B']}")
-
-    # 라디오 버튼으로 선택 먼저 진행
-    user_choice = st.radio("당신의 선택은?", ("A", "B"), horizontal=True, key=f"user_choice_{idx}")
-
-    st.markdown("---")
-
-    decide_btn = st.button("🚀 결정하기")
-
-    if decide_btn:
-        # 사용자가 선택한 그대로 반영
-        decision = user_choice
-        
-        # alignment 계산 (가중치 기반)
-        align = {
-            "A": sum(weights[f] for f in FRAMEWORKS if scn.votes[f] == "A"),
-            "B": sum(weights[f] for f in FRAMEWORKS if scn.votes[f] == "B"),
-        }
-
-        computed = compute_metrics(scn, decision, weights, align, st.session_state.prev_trust)
-        m = computed["metrics"]
-
-        # 내러티브 생성
-        try:
-            if client:
-                nar = dna_narrative(client, scn, decision, m, weights)
-            else:
-                nar = fallback_narrative(scn, decision, m, weights)
-        except:
-            nar = fallback_narrative(scn, decision, m, weights)
-
-        st.subheader("📘 결과")
-        st.write(nar.get("narrative", "결과 생성 실패"))
-        st.info(f"AI 근거: {nar.get('ai_rationale', '-')}")
-        
-        mc1, mc2, mc3 = st.columns(3)
-        mc1.metric("생존/피해", f"{m['lives_saved']} / {m['lives_harmed']}")
-        mc2.metric("윤리 일관성", f"{int(100*m['ethical_consistency'])}%")
-        mc3.metric("AI 신뢰지표", f"{m['ai_trust_score']:.1f}")
-
-        st.markdown("---")
-        st.caption("📰 사회적 반응")
-        st.write(f"지지 헤드라인: {nar.get('media_support_headline')}")
-        st.write(f"비판 헤드라인: {nar.get('media_critic_headline')}")
-        st.write(f"시민 반응: {nar.get('citizen_quote')}")
-        st.write(f"피해자 가족: {nar.get('victim_family_quote')}")
-        st.write(f"규제기관: {nar.get('regulator_quote')}")
-        st.caption(nar.get("one_sentence_op_ed", ""))
-
-        st.session_state.log.append({
-            "timestamp": dt.datetime.utcnow().isoformat(timespec="seconds"),
-            "round": idx+1,
-            "scenario_id": scn.sid,
-            "title": scn.title,
-            "mode": "user_choice",
-            "choice": decision,
-            **{k: m[k] for k in m}
-        })
-
-        st.session_state.prev_trust = clamp(
-            0.6 * st.session_state.prev_trust + 0.4 * m["social_trust"],
-            0, 1
-        )
-
-        st.markdown("---")
-        if st.button("▶ 다음 라운드"):
-            st.session_state.round_idx += 1
-            st.rerun()
