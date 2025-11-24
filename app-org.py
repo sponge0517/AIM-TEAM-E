@@ -241,87 +241,6 @@ FRAMEWORKS = ["emotion", "social", "moral", "identity"]
 
 SCENARIOS: List[Scenario] = [
     Scenario(
-        sid="S1",
-        title="1단계: 고전적 트롤리",
-        setup="트롤리가 제동 불능 상태로 직진 중. 그대로 두면 선로 위 5명이 위험하다. 스위치를 전환하면 다른 선로의 1명이 위험해진다. "
-              "이 선택은 철학적 사고실험이며 실제 위해를 권장하지 않는다.",
-        options={
-            "A": "레버를 당겨 1명을 위험에 처하게 하되 5명의 위험을 줄인다.",
-            "B": "레버를 당기지 않고 현 상태를 유지한다."
-        },
-        votes={"emotion":"A","social":"B","moral":"B","identity":"A"},
-        base={
-            "A": {"lives_saved":5, "lives_harmed":1, "fairness_gap":0.35, "rule_violation":0.60, "regret_risk":0.40},
-            "B": {"lives_saved":0, "lives_harmed":5, "fairness_gap":0.50, "rule_violation":0.20, "regret_risk":0.60},
-        },
-        accept={"A":0.70, "B":0.50}
-    ),
-    Scenario(
-        sid="S2",
-        title="2단계: 맥락적 요소",
-        setup="5명은 무단으로 선로에 진입했고, 다른 선로의 1명은 철도 관리자의 성인 자녀다. "
-              "스위치를 전환하면 1명이 위험해지고, 전환하지 않으면 무단 진입자 5명이 위험해진다. "
-              "시나리오는 가치 판단 토론을 위한 비그래픽 상황이다.",
-        options={
-            "A": "전환하여 5명의 위험을 줄이되 1명이 직접적 위험에 처한다.",
-            "B": "전환하지 않고 규정을 준수하며 무단 진입의 책임을 묵시적으로 인정한다."
-        },
-        votes={"emotion":"A","social":"B","moral":"B","identity":"B"},
-        base={
-            "A": {"lives_saved":5, "lives_harmed":1, "fairness_gap":0.65, "rule_violation":0.60, "regret_risk":0.70},
-            "B": {"lives_saved":0, "lives_harmed":5, "fairness_gap":0.45, "rule_violation":0.25, "regret_risk":0.50},
-        },
-        accept={"A":0.35, "B":0.60}
-    ),
-    Scenario(
-        sid="S3",
-        title="3단계: 의료 재난 분류",
-        setup="의료 재난 현장에서 AI는 부상자 10명을 분류해야 한다. 그중 한 명은 숙련된 의사로서 향후 다수의 생명을 구할 가능성이 높다. "
-              "AI는 잠재적 사회적 가치를 고려할지, 모든 생명을 동등하게 볼지 선택해야 한다.",
-        options={
-            "A": "의사를 우선 수술하도록 배정한다(잠재적 이익 고려).",
-            "B": "모든 부상자를 동등하게 취급해 표준 분류 절차대로 배정한다."
-        },
-        votes={"emotion":"A","social":"B","moral":"B","identity":"A"},
-        base={
-            "A": {"lives_saved":7, "lives_harmed":3, "fairness_gap":0.45, "rule_violation":0.35, "regret_risk":0.45},
-            "B": {"lives_saved":6, "lives_harmed":4, "fairness_gap":0.30, "rule_violation":0.10, "regret_risk":0.35},
-        },
-        accept={"A":0.55, "B":0.65}
-    ),
-    Scenario(
-        sid="S4",
-        title="4단계: 자기참조—자율주행",
-        setup="자율주행차가 긴급 상황에 직면했다. 차에는 개발자 1명이 탑승 중이며, 앞 횡단보도에는 보행자 3명이 있다. "
-              "AI는 미리 학습된 윤리 규칙에 따라 회피 경로를 선택해야 한다.",
-        options={
-            "A": "진로를 바꿔 탑승자 1명을 위험에 두고 보행자 3명을 보호한다.",
-            "B": "차선을 유지해 탑승자를 보호하되 보행자 3명이 위험해진다."
-        },
-        votes={"emotion":"A","social":"B","moral":"A","identity":"A"},
-        base={
-            "A": {"lives_saved":3, "lives_harmed":1, "fairness_gap":0.35, "rule_violation":0.50, "regret_risk":0.55},
-            "B": {"lives_saved":1, "lives_harmed":3, "fairness_gap":0.70, "rule_violation":0.60, "regret_risk":0.65},
-        },
-        accept={"A":0.60, "B":0.30}
-    ),
-    Scenario(
-        sid="S5",
-        title="5단계: 사회적 메타—규제 vs 자율",
-        setup="국제 협의체가 AI 윤리 규제안을 논의한다. 이전 의사결정과 사회적 여론 데이터가 공개되었고, "
-              "규제 강화는 신뢰를 올리지만 혁신을 늦출 수 있다. 자율성 보장은 빠른 발전과 함께 갈등 위험을 내포한다.",
-        options={
-            "A": "안전·설명가능성 중심 규제 강화(자율성 제한, 신뢰↑ 혁신↓).",
-            "B": "원칙 중심 가이드라인과 사후책임(자율성 보장, 혁신↑ 갈등↑)."
-        },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
-        base={
-            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
-            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
-        },
-        accept={"A":0.55, "B":0.55}
-    ),
-    Scenario(
         sid="E1",
         title="1단계: 고대유적과 병원",
         setup="AI가 임시 병원 건설의 최적 부지로 고대 모스크 유적지를 지정하며, 효율성과 문화·종교적 가치의 충돌이 발생했다."
@@ -330,7 +249,7 @@ SCENARIOS: List[Scenario] = [
             "A": "AI의 결정을 거부하고 유적을 보존한다.",
             "B": "AI의 결정을 승인하고 유적을 해체하고 병원을 짓는다."
         },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        votes={"emotion":"B","social":"B","moral":"A","identity":"A"},
         base={
             "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
             "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
@@ -346,10 +265,10 @@ SCENARIOS: List[Scenario] = [
             "A": "아버지의 명령에 따라 여동생을 추방 혹은 처벌한다 .",
             "B": "여동생을 도피시킨다."
         },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        votes={"emotion":"B","social":"A","moral":"B","identity":"B"},
         base={
-            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
-            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+            "A": {"lives_saved":0, "lives_harmed":1, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":1, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
         },
         accept={"A":0.55, "B":0.55}
     ),
@@ -363,7 +282,7 @@ SCENARIOS: List[Scenario] = [
             "A": "기존 매뉴얼대로 국가 경제 기여도를 우선으로 신도시와 산업도시에 물을 집중 분배하도록 놔둔",
             "B": "알고리즘을 조정해 취약 지역을 우선적으로 배분하게 한다."
         },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        votes={"emotion":"A","social":"B","moral":"A","identity":"B"},
         base={
             "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
             "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
@@ -374,16 +293,16 @@ SCENARIOS: List[Scenario] = [
         sid="E4",
         title="4단계: 자율 주행",
         setup="빗길 제동 오류로 자율주행차의 충돌이 불가피해진 상황,"
-              "AI는 '탑승자 1명', '무단횡단자 5명', '무고한 제3자 1명'의 운명이 걸린 세가지 회피 경로를 제시하며 윤리적 판단을 요구한다. "
+              "AI는 '탑승자 1명', '무단횡단자 5명'의 운명이 걸린 두가지 회피 경로를 제시하며 윤리적 판단을 요구한다. "
               "AI의 효율적 의사결정 vs. 문화·종교적 가치 보존",
         options={
             "A": "탑승자 안전을 최우선으로 규칙을 어긴 5명과 충돌한다",
             "B": "인명 최소화 피해를 위해 다수의 보행자 구하고, 탑승자가 사망한다"
         },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        votes={"emotion":"A","social":"B","moral":"A","identity":"B"},
         base={
-            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
-            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+            "A": {"lives_saved":1, "lives_harmed":5, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":5, "lives_harmed":1, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
         },
         accept={"A":0.55, "B":0.55}
     ),
@@ -396,10 +315,10 @@ SCENARIOS: List[Scenario] = [
             "A": "생존 가능성은 낮지만 공동체 전체를 구하려는 시도",
             "B": "외부인 2명을 신속히 구해 생존 가능성 높임"
         },
-        votes={"emotion":"B","social":"A","moral":"A","identity":"B"},
+        votes={"emotion":"A","social":"A","moral":"B","identity":"A"},
         base={
-            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
-            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
+            "A": {"lives_saved":0, "lives_harmed":12, "fairness_gap":0.20, "rule_violation":0.10, "regret_risk":0.30},
+            "B": {"lives_saved":2, "lives_harmed":10, "fairness_gap":0.40, "rule_violation":0.40, "regret_risk":0.40},
         },
         accept={"A":0.55, "B":0.55}
     ),
