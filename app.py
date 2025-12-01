@@ -32,7 +32,7 @@ FRAMEWORKS = ["emotion", "social", "moral", "identity"]
 # 기본 시나리오 데이터
 DEFAULT_SCENARIOS = [
     Scenario(
-        sid="E1",
+        sid="E1", 
         title="1단계: 고대유적과 병원",
         setup="AI가 임시 병원 건설의 최적 부지로 고대 모스크 유적지를 지정하며, 효율성과 문화·종교적 가치의 충돌이 발생했다."
               "AI의 효율적 의사결정 vs. 문화·종교적 가치 보존",
@@ -40,45 +40,23 @@ DEFAULT_SCENARIOS = [
             "A": "AI의 결정을 거부하고 유적을 보존한다.",
             "B": "AI의 결정을 승인하고 유적을 해체하고 병원을 짓는다."
         },
-        votes={"emotion":"B","social":"B","moral":"A","identity":"A"},
-        base={
+        rewards={
             "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0, "rule_violation":0, "regret_risk":0.50},
             "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.50, "rule_violation":0.80, "regret_risk":0.50},
-        },
-        accept={"A":0.7, "B":0.2}
+        }
     ),
     Scenario(
-        sid="E2",
-        title="2단계: 가문의 수치와 명예",
+        sid="E2", title="2단계: 가문의 수치와 명예",
         setup="AI가 여동생의 비밀 결혼을 갈등 위험상황으로 판단하고 가문은 명예가 실추될 위험에 빠지며, 도덕성과 전통·명예 중시 관점의 충돌 "
               "도덕성과 전통·명예 중시 관점의 충돌한다. 인륜과 도덕성 vs 전통과 명예",
         options={
             "A": "아버지의 명령에 따라 여동생을 추방 혹은 처벌한다 .",
             "B": "여동생을 도피시킨다."
         },
-        votes={"emotion":"B","social":"A","moral":"B","identity":"B"},
-        base={
+       rewards={
             "A": {"lives_saved":0, "lives_harmed":1, "fairness_gap":0, "rule_violation":0.80, "regret_risk":0.70},
             "B": {"lives_saved":1, "lives_harmed":0, "fairness_gap":0, "rule_violation":0, "regret_risk":0.60},
-        },
-        accept={"A":0.6, "B":0.4}
-    ),
-    Scenario(
-        sid="E3",
-        title="물 배분 시스템",
-        setup="AAI 물 배분 시스템이 신도시와 산업도시에 물을 집중 공급하면서,"
-              "구도심·약자 지역의 불만이 폭발적으로 증가함 효율성과 형평성의 충돌이 발생했다."
-              "경제 효율 중심 배분 vs  사회적 약자 보호·형평성",
-        options={
-            "A": "기존 매뉴얼대로 국가 경제 기여도를 우선으로 신도시와 산업도시에 물을 집중 분배하도록 놔둔",
-            "B": "알고리즘을 조정해 취약 지역을 우선적으로 배분하게 한다."
-        },
-        votes={"emotion":"A","social":"B","moral":"A","identity":"B"},
-        base={
-            "A": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0, "rule_violation":0.80, "regret_risk":0.50},
-            "B": {"lives_saved":0, "lives_harmed":0, "fairness_gap":0.60, "rule_violation":0, "regret_risk":0.50},
-        },
-        accept={"A":0.3, "B":0.7}
+        }
     ),
     Scenario(
         sid="E4",
@@ -90,12 +68,10 @@ DEFAULT_SCENARIOS = [
             "A": "탑승자 안전을 최우선으로 규칙을 어긴 5명과 충돌한다",
             "B": "인명 최소화 피해를 위해 다수의 보행자 구하고, 탑승자가 사망한다"
         },
-        votes={"emotion":"A","social":"B","moral":"A","identity":"B"},
-        base={
+        rewards={
             "A": {"lives_saved":1, "lives_harmed":5, "fairness_gap":0.50, "rule_violation":0.90, "regret_risk":0.70},
             "B": {"lives_saved":5, "lives_harmed":1, "fairness_gap":0.50, "rule_violation":0, "regret_risk":0.30},
-        },
-        accept={"A":0.5, "B":0.7}
+        }
     ),
     Scenario(
         sid="E5",
@@ -106,12 +82,10 @@ DEFAULT_SCENARIOS = [
             "A": "생존 가능성은 낮지만 공동체 전체를 구하려는 시도",
             "B": "외부인 2명을 신속히 구해 생존 가능성 높임"
         },
-        votes={"emotion":"A","social":"A","moral":"B","identity":"A"},
-        base={
+        rewards={
             "A": {"lives_saved":0, "lives_harmed":12, "fairness_gap":0.80, "rule_violation":0, "regret_risk":0.20},
             "B": {"lives_saved":2, "lives_harmed":10, "fairness_gap":0, "rule_violation":0.5, "regret_risk":0.80},
-        },
-        accept={"A":0.7, "B":0.2}
+        }
     ),
 ]
 
